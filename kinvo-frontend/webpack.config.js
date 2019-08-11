@@ -12,9 +12,13 @@ module.exports = {
     filename: "bundle.js",
     publicPath: "/dist/"
   },
+  resolve: {
+    extensions: [".js", ".ts", ".tsx", ".json", ".jsx"]
+  },
   devServer: {
-    contentBase: "./public",
-    port: 9000
+    contentBase: path.join(__dirname, "dist"),
+    port: 4000,
+    historyApiFallback: true
   },
   optimization: {
     minimizer: [
@@ -32,6 +36,13 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        options: {
+          transpileOnly: true
+        }
+      },
       {
         test: /\.s?[ac]ss$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
